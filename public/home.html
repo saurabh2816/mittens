@@ -1,0 +1,274 @@
+<div class="row feed">
+  <div class="col-md-3">
+    <div ng-hide="currentUser" class="login">
+      <!-- <h5>Login:</h5>
+      <br>
+      <input class="form-control" type="text" size="30" placeholder="Username" ng-model="username">
+      <br><br>
+      <input class="form-control" type="password" size="30" placeholder="password" ng-model="password">
+      <br>
+      <button type="button" class="btn btn-primary" ng-click="signin()">Sign In</button>
+      <a href="#/signup" class="pull-right">Not a member? Signup</a> -->
+
+<!-- start login box paste -->
+      <div>
+          <div id="loginbox" style="" class="mainbox">
+              <div class="panel panel-info" >
+                      <div class="panel-heading">
+                          <div class="panel-title">Sign In</div>
+                      </div>
+
+                      <div style="padding-top:30px" class="panel-body" >
+
+                          <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+
+                          <form id="loginform" class="form-horizontal" role="form">
+
+                              <div style="margin-bottom: 25px" class="input-group">
+                                          <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                          <input id="login-username" type="text" class="form-control" name="username" value="" placeholder="Username" ng-model="username">
+                                      </div>
+
+                              <div style="margin-bottom: 25px" class="input-group">
+                                          <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                          <input id="login-password" type="password" class="form-control" name="password" placeholder="Password" ng-model="password">
+                                      </div>
+
+
+
+                              <div class="input-group">
+                                        <div class="checkbox">
+                                          <label>
+                                            <input id="login-remember" type="checkbox" name="remember" value="1"> Remember me
+                                          </label>
+                                        </div>
+                                      </div>
+
+
+                                  <div style="margin-top:10px" class="form-group">
+                                      <!-- Button -->
+
+                                      <div class="col-sm-12 controls">
+                                          <button type="button" class="btn btn-primary" ng-click="signin()">Sign In</button>
+                                      </div>
+                                  </div>
+
+
+                                  <div class="form-group">
+                                      <div class="col-md-12 control">
+                                          <div style="border-top: 1px solid; padding-top:15px; font-size:85%">
+                                              Don't have an account?
+                                              <a href="" onClick="$('#loginbox').hide(); $('#signupbox').show()" class="pull-right">
+                                              Sign Up Here
+                                              </a>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </form>
+
+
+
+                          </div>
+                      </div>
+          </div> <!-- end of loginbox -->
+
+          <div id="signupbox" style="display:none;" class="">
+                      <div class="panel panel-info">
+                          <div class="panel-heading">
+                              <div class="panel-title">Sign Up</div>
+                              <div style="float:right; font-size: 85%; position: relative; top:-10px"><a id="signinlink" href="" onclick="$('#signupbox').hide(); $('#loginbox').show()">Sign In</a></div>
+                          </div>
+                          <div class="panel-body" >
+                              <form id="signupform" class="form-horizontal" role="form">
+
+                                  <div id="signupalert" style="display:none" class="alert alert-danger">
+                                      <p>Error:</p>
+                                      <span></span>
+                                  </div>
+
+                                  <div class="form-group">
+                                      <label for="firstname" class="col-md-3 control-label" >Username</label>
+                                      <div class="col-md-9">
+                                          <input type="text" class="form-control" name="firstname" placeholder="Username"  ng-model="username">
+                                      </div>
+                                  </div>
+
+                                  <div class="form-group">
+                                      <label for="password" class="col-md-3 control-label">Password</label>
+                                      <div class="col-md-9">
+                                          <input type="password" class="form-control" name="passwd" placeholder="Password" ng-model="password">
+                                      </div>
+                                  </div>
+
+
+
+                                  <div class="form-group" ng-controller="SignupController">
+                                      <!-- Button -->
+                                      <div class="col-md-offset-3 col-md-9">
+                                          <button id="btn-signup" type="button" class="btn btn-info" ng-click="submitSignup()"><i class="icon-hand-right"></i> &nbsp Sign Up</button>
+                                      </div>
+                                  </div>
+
+                                  <div style="border-top: 1px solid #999; padding-top:20px"  class="form-group">
+
+                                  </div>
+                              </form>
+                           </div>
+                      </div>
+
+
+
+
+           </div>
+      </div>
+
+
+<!-- end of paste -->
+
+
+    </div>
+
+    <div ng-show="currentUser">
+    Hello,<strong> {{ currentUser }}</strong>
+    <br>
+    <button type="button" class="btn btn-primary" ng-click="logout()">Logout</button>
+    </div>
+
+  </div> <!-- end of col-md-4-->
+
+  <div class="col-md-9">
+    <div class="new-meow" ng-show="currentUser">
+      <input  type="text" placeholder="What's on your mind?" maxlength="100" ng-model="newMeow" >
+      <button class="btn btn-primary submit" type="button" ng-click="submitNewMeow()">Submit</button>
+      <div class="alert alert-danger" ng-show="error">
+        Meows cannot be empty
+      </div>
+      <div class="alert alert-info" style="padding: 5px;">
+        {{100 - newMeow.length + ' characters remaining'}}
+      </div>
+
+    <div id="tweet" ng-repeat="meow in meows | orderBy:'$index':true">
+
+    <section class="comments">
+        <article class="comment">
+          <a class="comment-img" href="#non">
+            <img src="https://lh3.googleusercontent.com/kvQvCjWgCKSA50laa0nIqUh6HRvMNFD35RyfiyxPBaYDLIM0K1bzF7vRd-G_5TrwJ7u300YRTw=s50-h50-e365" alt="" width="50" height="50">
+          </a>
+          <div class="comment-body">
+            <div class="text" >
+              <a href ng-click="removeMeow(meow)"><span class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></a>
+
+              <p>{{meow.text }}</p>
+            </div>
+            <p class="attribution">by <a href="">{{meow.username}}</a> at {{meow.date}}</p>
+          </div>
+        </article>
+    </section>
+  </div>
+
+
+
+    <!--
+    <div ng-repeat="meow in meows" class="tweet well"  >
+      <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+      <a href ng-click="removeMeow(meow)"><span class="glyphicon glyphicon-remove pull-right" aria-hidden="true"></a>
+      <strong><p style="display:inline">{{meow.text}}</p></strong> <div class="username "><small>{{meow.username}}</small></div>
+    </div> -->
+
+  </div>
+
+  <div ng-hide="currentUser">
+
+    <div class="features">
+                           <!-- FEATURES LEFT SIDE -->
+                           <div class="col-sm-6 features-left text-center wow fadeInLeft" data-wow-offset="10" data-wow-duration="1.5s" style="visibility: visible;-webkit-animation-duration: 1.5s; -moz-animation-duration: 1.5s; animation-duration: 1.5s;">
+                               <!-- FEATURE -->
+                               <div class="feature-items">
+                                   <!-- ICON -->
+                                   <i class="features-icon fa fa-check-circle "></i>
+
+                                   <h5>MEAN Stack Application</h5>
+                                   <p>
+                                    A MEAN stack application to create a simple social media feed (similar to twitter)
+                                   </p>
+                               </div>
+                               <!-- end Single Feature item -->
+
+                               <!-- FEATURE -->
+                               <div class="feature-items">
+                                   <!-- ICON -->
+                                   <i class="features-icon fa fa-jsfiddle"></i>
+                                   <h5>Angular.js</h5>
+                                   <p>
+                                       Fast single page application with real time posting and deletion of the meows.
+                                   </p>
+                               </div>
+                               <!-- end Single Feature item -->
+
+                               <!-- FEATURE -->
+                               <div class="feature-items">
+
+                                   <!-- ICON -->
+                                   <i class="features-icon fa fa-lock "></i>
+
+                                   <!-- FEATURE HEADING AND DESCRIPTION -->
+                                   <h5>Bcrypt.js</h5>
+                                   <p>
+                                      Encrypt passwords in database using <b>bcrypt.js</b>
+                                   </p>
+                               </div>
+                               <!-- end Single Feature item -->
+
+                           </div>
+                           <!-- /END FEATURES LEFT -->
+
+
+
+                           <!-- FEATURES RIGHT -->
+                           <div class="col-sm-6 features-right text-center wow fadeInRight" data-wow-offset="10" data-wow-duration="1.5s" style="visibility: visible;-webkit-animation-duration: 1.5s; -moz-animation-duration: 1.5s; animation-duration: 1.5s;">
+
+                               <!-- FEATURE -->
+                               <div class="feature-items">
+
+                                   <!-- ICON -->
+                                   <i class="features-icon fa fa-user-plus"></i>
+
+                                   <h5>Signup</h5>
+                                   <p>
+                                       Signup and start posting your meows<br><br>
+                                   </p>
+                               </div>
+                               <!-- end Single Feature item -->
+
+                               <!-- FEATURE -->
+                               <div class="feature-items">
+                                   <!-- ICON -->
+                                   <i class="features-icon fa fa-database"></i>
+
+                                   <h5>MongoDB</h5>
+                                   <p>
+                                       Add meows to database. Remove from database. Each meow has user._id to identify who posted it.
+                                   </p>
+
+                               </div>
+                               <!-- end Single Feature item -->
+
+                               <!-- FEATURE -->
+                               <div class="feature-items">
+                                   <!-- ICON -->
+                                   <i class="features-icon fa fa-bookmark-o"></i>
+
+
+
+                                   <h5>JSON Web Tokens</h5>
+                                   <p>
+                                       Node.js library for signing, decoding, and verifying JSON Web Tokens
+                                   </p>
+                               </div><!-- end Single Feature item -->
+
+                           </div><!-- /END FEATURES RIGHT -->
+                       </div>
+
+
+</div>
+</div><!-- row feed-->

@@ -1,0 +1,168 @@
+<html ng-app="mittens">
+  <head>
+    <title>Mittens</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- For loading bar-->
+
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.7.1/loading-bar.min.css' type='text/css' media='all' />
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.7.1/loading-bar.min.js'></script>
+
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="bootstrap/css/style.css">
+
+    <!-- page title font -->
+     <link href="https://fonts.googleapis.com/css?family=Lobster+Two" rel="stylesheet">
+
+    <script type="text/javascript">
+        var app = angular.module("mittens", ['ngRoute', 'ngCookies']);
+
+
+        app.config(function($routeProvider, $locationProvider) {
+            $routeProvider
+             .when('/', {
+              templateUrl: 'home.html',
+              controller: 'HomeController'
+            })
+            .when('/signup', {
+              templateUrl: 'signup.html',
+              controller: 'SignupController'
+            });
+          });
+
+        app.run(function($rootScope, $cookies){ //dependency injection
+          // using app.run for loading token and username even after refresh
+          if($cookies.get('token') && $cookies.get('currentUser')) {
+            $rootScope.token = $cookies.get('token');
+            $rootScope.currentUser = $cookies.get('currentUser');
+          }
+
+        });
+
+        app.controller('HomeController', function($rootScope, $scope, $http, $cookies) { //all the controllers use the same stuff on rootScope
+          $scope.meows = [];
+          $scope.newMeow = '';
+          $scope.error = false;
+
+          $scope.submitNewMeow = function() {
+            if($scope.newMeow === ""){
+              console.log("meow is empty");
+              $scope.error = true;
+            }
+            else {
+              // console.log('meow is not empty:' + $scope.newMeow);
+              $scope.meows.unshift($scope.newMeow);
+              console.log($scope.meows);
+
+
+              $http.post('/meows',                  //path
+              {newMeow: $scope.newMeow},           //payload
+              {headers: {                          //header
+                'authorization': $rootScope.token
+              }
+              }).then(function() {
+              getMeows();
+              $scope.newMeow = '';
+              });
+
+            }
+          };
+
+          $scope.removeMeow = function(meow) {
+            $http.put('/meows/remove',
+            {meow: meow},
+            {headers: {                          //header
+              'authorization': $rootScope.token
+            }}).then(function() { //value and property name are same but don't confuse it
+            getMeows();
+            });
+          };
+
+          function getMeows() {
+            $http.get('/meows').then(function(response) { //promise
+              // console.log(response.data);
+              $scope.meows = response.data;
+            });
+          }
+
+          $scope.signin = function () {
+            $http.put('/users/signin', {username: $scope.username, password: $scope.password})
+            .then(function(res) { // res.data.token will give your unique token.
+
+              console.log(res.data.token);
+              $cookies.put('token', res.data.token); // key , value
+              $cookies.put('currentUser', $scope.username); // key , value
+
+              $rootScope.currentUser = $scope.username;
+              $rootScope.token = res.data.token;
+
+              //alert("success")
+
+            }, function(er) {
+              alert("bad login credentials");
+            });
+          };
+
+          $scope.logout = function() {
+            $cookies.remove('token'); // key , value
+            $cookies.remove('currentUser'); // key , value
+            $rootScope.token = null;
+            $rootScope.currentUser = null;
+          };
+
+          getMeows();
+        }); // end of HomeController
+
+
+        app.controller('SignupController', function($scope, $http) {
+
+          $scope.submitSignup = function() {
+            var newUser = {
+              username: $scope.username, //assign username using ng-model
+              password: $scope.password
+            };
+
+            $http.post('/users', newUser).then(function() { //value and property name are same but don't confuse it
+              //alert('success');
+              $scope.username = "";
+              $scope.password = "";
+            });
+          }
+
+        });
+
+    </script>
+  </head>
+  <body ng-controller="HomeController">
+    <div class="page-title">
+      <h1><a href="#/" style="font-size: 50px; font-family: 'Lobster Two', cursive;">Mittens - Post Your Meows</a></h1>
+    </div>
+    <div ng-view></div>
+
+
+<!-- <div>What I learned
+<ul>
+  <li>Login and Save a JSON Web Token in a Cookie</li>
+  <li>Adding CRUD functionality to our website</li>
+</ul>
+
+
+</div> -->
+
+<footer>
+  <div class="copyright">
+    <p>&copy 2017 - saurabhrana.me</p>
+  </div>
+  <div class="social">
+    <a rel="nofollow" rel="noreferrer" href="http://www.saurabhrana.me" class="support">Saurabh Singh Rana</a>
+    <a rel="nofollow" rel="noreferrer" href="http://www.facebook.com/saurabh2816" class="face">f</a>
+    <a rel="nofollow" rel="noreferrer"href="http://www.twitter.com/saurabh_rana" class="tweet1">t</a>
+    <a rel="nofollow" rel="noreferrer" href="http://www.linkedin.com/in/saurabhsinghrana" class="linked">in</a>
+  </div>
+</footer>
+
+
+  </body>
+</html>

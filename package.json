@@ -1,0 +1,23 @@
+{
+  "name": "mittens",
+  "version": "0.0.1",
+  "description": "tweets for kittens",
+  "main": "server.js",
+  "dependencies": {
+    "angular-loading-bar": "^0.9.0",
+    "angular-tek-progress-bar": "^0.2.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "jwt-simple": "^0.5.1",
+    "moment": "^2.18.1",
+    "mongodb": "^2.2.25"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "saurabh",
+  "license": "ISC"
+}
