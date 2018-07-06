@@ -1,9 +1,7 @@
 # Mittens - Posting Your Meows (tweets) 
-## MEAN stack application to create a simple social media feed like twitter 
+MEAN stack application to create a simple social media feed like twitter 
 
 ### Live: [Mittens](https://mittens-meow.herokuapp.com/ "Mittens")
-
-meow = tweets <br/>
 
 ## Register or use the test login
 
@@ -17,3 +15,7 @@ password: saurabh
 3. Meows stores time using Moment.js for accurate and exact timings.
 4. Meows have a limit of 100 characters.
 5. Using mongodb to store the meows
+
+<br/>
+
+meow = tweets :) <br/>
