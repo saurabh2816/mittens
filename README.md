@@ -3,13 +3,11 @@
 
 ### Live: [Mittens](https://mittens-meow.herokuapp.com/ "Mittens")
 
-meow = tweet
-tweet = meow  
-:) 
+meow = tweets <br/>
 
 ## Register or use the test login
 
-username: saurabh1
+username: saurabh1 <br/>
 password: saurabh
 
 ## Things I'm proud of
