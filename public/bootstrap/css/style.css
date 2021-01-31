@@ -31,7 +31,10 @@ html, body {
 
 }
 
-
+.textlogin {
+  color: #e01b1b;
+  font-weight: 200;  
+}
 .tweet:hover {
   background-color: #f5f8fa;
 }
