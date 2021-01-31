@@ -108,7 +108,7 @@ app.put('/users/signin', function(req, res, next){
   });
 });
 
-app.listen(3000, function () {
+app.listen(process.env.PORT || 3000, function () {
   // var d = Date().toString().substring(4,Date().toString().length );
   var d= moment().format("h:mma, D MMM YYYY");
   console.log(d)
