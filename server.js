@@ -11,7 +11,7 @@ var moment = require('moment');
 var JWT_SECRET = 'saurabh';
 
 // Connect to the db
-MongoClient.connect("mongodb://saurabh:saurabh@cluster0-shard-00-00.ksg2h.mongodb.net:27017,cluster0-shard-00-01.ksg2h.mongodb.net:27017,cluster0-shard-00-02.ksg2h.mongodb.net:27017/<dbname>?ssl=true&replicaSet=atlas-3dlq4x-shard-0&authSource=admin&retryWrites=true&w=majority", function(err, dbconn) {
+MongoClient.connect("mongodb://saurabh:saurabh@cluster0-shard-00-00.ksg2h.mongodb.net:27017,cluster0-shard-00-01.ksg2h.mongodb.net:27017,cluster0-shard-00-02.ksg2h.mongodb.net:27017/mittens?ssl=true&replicaSet=atlas-3dlq4x-shard-0&authSource=admin&retryWrites=true&w=majority", function(err, dbconn) {
   if(!err) {
     console.log("We are connected");
     db = dbconn;
