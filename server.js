@@ -14,10 +14,11 @@ var JWT_SECRET = 'saurabh';
 MongoClient.connect("mongodb://saurabh:saurabh@cluster0-shard-00-00.ksg2h.mongodb.net:27017,cluster0-shard-00-01.ksg2h.mongodb.net:27017,cluster0-shard-00-02.ksg2h.mongodb.net:27017/mittens?ssl=true&replicaSet=atlas-3dlq4x-shard-0&authSource=admin&retryWrites=true&w=majority", function(err, dbconn) {
   if(!err) {
     console.log("We are connected");
-    db = dbconn;
+     db = dbconn.db('meow');
+    // db = dbconna
   }
   else {
-    console.log("nahi hua benchod connect!!");
+    console.log("not connected!!");
   }
 });
 
